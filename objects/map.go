@@ -10,7 +10,7 @@ import (
 // format:
 //
 //     data := map[string]interface{}{"name": "Stew"}
-//     Map(data).Get("name")
+//     objects.Map(data).Get("name")
 //     // returns "Stew"
 type Map map[string]interface{}
 
