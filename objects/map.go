@@ -23,6 +23,13 @@ type Map map[string]interface{}
 //
 // * any key arugment is non-string
 // * there are an odd number of arguments
+//
+// Example
+//
+//     m := objects.NewMap("name", "Mat", "age", 29, "subobj", objects.NewMap("active", true))
+//
+//     // creates a Map equivalent to
+//     m := map[string]interface{}{"name": "Mat", "age": 29, "subobj": map[string]interface{}{"active": true}}
 func NewMap(keyAndValuePairs ...interface{}) Map {
 
 	newMap := make(Map)
