@@ -1,4 +1,4 @@
-package stringy
+package strings
 
 import (
 	"bytes"
@@ -13,7 +13,7 @@ import (
 //     three := []byte("Stretchr!")
 //    
 //     // merge the bytes
-//     mergedBytes := stringy.MergeBytes(one, two, three)
+//     mergedBytes := strings.MergeBytes(one, two, three)
 //    
 //     log.Print(mergedBytes)
 //     // prints "Hello Stretchr!"

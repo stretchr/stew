@@ -1,4 +1,4 @@
-package stringy
+package strings
 
 import (
 	"bytes"

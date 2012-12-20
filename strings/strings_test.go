@@ -1,4 +1,4 @@
-package stringy
+package strings
 
 import (
 	"bytes"
@@ -7,13 +7,13 @@ import (
 	"testing"
 )
 
-func TestStringy_MergeStrings(t *testing.T) {
+func Teststrings_MergeStrings(t *testing.T) {
 
 	assert.Equal(t, "callback(jsonString)", MergeStrings("callback", "(", "jsonString", ")"))
 
 }
 
-func TestStringy_JoinStrings(t *testing.T) {
+func Teststrings_JoinStrings(t *testing.T) {
 
 	assert.Equal(t, "projects/centivus/accounts/tyler", JoinStrings("/", "projects", "centivus", "accounts", "tyler"))
 
