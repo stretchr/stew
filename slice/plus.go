@@ -1,5 +1,6 @@
 package slice
 
+// PlusStrings adds two []string arrays together, returning a new []string.
 func PlusStrings(s, plus []string) []string {
 
 	var l int

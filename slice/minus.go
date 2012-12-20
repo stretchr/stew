@@ -1,5 +1,7 @@
 package slice
 
+// MinusStrings gets a new []string containing all items in s, that
+// no not appear in minus.
 func MinusStrings(s, minus []string) []string {
 
 	a := []string{}
