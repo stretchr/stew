@@ -19,9 +19,13 @@ type Map map[string]interface{}
 //
 // The arguments follow a key, value pattern.
 //
-// Panics if any key arugment is non-string or if there are an odd number of arguments
+// Panics
+//
+// Panics if any key arugment is non-string or if there are an odd number of arguments.
 //
 // Example
+//
+// To easily create Maps:
 //
 //     m := objects.NewMap("name", "Mat", "age", 29, "subobj", objects.NewMap("active", true))
 //
