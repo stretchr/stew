@@ -18,6 +18,7 @@ type Map map[string]interface{}
 // For example:
 //
 //     m = Map{"name":Map{"First": "Mat", "Last": "Ryer"}}
+//     
 //     m.Get("name", "Last")
 //     // returns "Ryer"
 //
