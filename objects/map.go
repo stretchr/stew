@@ -19,10 +19,7 @@ type Map map[string]interface{}
 //
 // The arguments follow a key, value pattern.
 //
-// Panics if:
-//
-// * any key arugment is non-string
-// * there are an odd number of arguments
+// Panics if any key arugment is non-string or if there are an odd number of arguments
 //
 // Example
 //
