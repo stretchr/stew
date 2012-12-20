@@ -18,6 +18,10 @@ type Map map[string]interface{}
 // For example:
 //
 //     m = Map{"name":Map{"First": "Mat", "Last": "Ryer"}}
+//     m.Get("name", "Last")
+//     // returns "Ryer"
+//
+//     //... or dot notaion (not as quick)
 //     m.Get("name.Last")
 //     // returns "Ryer"
 func (d Map) Get(path ...string) interface{} {
