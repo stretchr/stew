@@ -1,2 +1,2 @@
-// strings provides high-performance string management and manipulation capabilities.
+// Strings provides high-performance string management and manipulation capabilities.
 package strings

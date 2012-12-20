@@ -1,2 +1,2 @@
-// slice provides high-performance slice management utilities.
+// Slice provides high-performance slice management utilities.
 package slice
