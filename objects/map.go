@@ -5,6 +5,13 @@ import (
 )
 
 // Map is a map[string]interface{} with additional helpful functionality.
+//
+// You can use Map functionality on any map[string]interface{} using the following
+// format:
+//
+//     data := map[string]interface{}{"name": "Stew"}
+//     Map(data).Get("name")
+//     // returns "Stew"
 type Map map[string]interface{}
 
 // Get gets the value from the map.  Supports deep nesting of other maps,
