@@ -21,8 +21,8 @@ type Map map[string]interface{}
 //
 // Panics if:
 //
-//   * any key arugment is non-string
-//   * there are an odd number of arguments
+// * any key arugment is non-string
+// * there are an odd number of arguments
 func NewMap(keyAndValuePairs ...interface{}) Map {
 
 	newMap := make(Map)
