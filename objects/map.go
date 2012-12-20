@@ -1,6 +1,7 @@
 package objects
 
 import (
+	"fmt"
 	"strings"
 )
 
@@ -13,6 +14,41 @@ import (
 //     objects.Map(data).Get("name")
 //     // returns "Stew"
 type Map map[string]interface{}
+
+// NewMap creates a new map.
+//
+// The arguments follow a key, value pattern.
+//
+// Panics if:
+//
+//   * any key arugment is non-string
+//   * there are an odd number of arguments
+func NewMap(keyAndValuePairs ...interface{}) Map {
+
+	newMap := make(Map)
+	keyAndValuePairsLen := len(keyAndValuePairs)
+
+	if keyAndValuePairsLen%2 != 0 {
+		panic("NewMap must have an even number of arguments following the 'key, value' pattern.")
+	}
+
+	for i := 0; i < keyAndValuePairsLen; i = i + 2 {
+
+		key := keyAndValuePairs[i]
+		value := keyAndValuePairs[i+1]
+
+		// make sure the key is a string
+		keyString, keyStringOK := key.(string)
+		if !keyStringOK {
+			panic(fmt.Sprintf("NewMap must follow 'string, interface{}' pattern.  %s is not a valid key.", keyString))
+		}
+
+		newMap[keyString] = value
+
+	}
+
+	return newMap
+}
 
 // Get gets the value from the map.  Supports deep nesting of other maps,
 // For example:
