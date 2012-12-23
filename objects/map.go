@@ -62,22 +62,12 @@ func NewMap(keyAndValuePairs ...interface{}) Map {
 // For example:
 //
 //     m = Map{"name":Map{"First": "Mat", "Last": "Ryer"}}
-//     
+//
 //     m.Get("name", "Last")
 //     // returns "Ryer"
-//
-//     //... or dot notaion (not as quick)
-//     m.Get("name.Last")
-//     // returns "Ryer"
-func (d Map) Get(path ...string) interface{} {
+func (d Map) Get(path string) interface{} {
 
-	var segs []string
-	if len(path) == 1 {
-		segs = strings.Split(path[0], ".")
-
-	} else {
-		segs = path
-	}
+	var segs []string = strings.Split(path, ".")
 
 	obj := d
 
@@ -191,10 +181,6 @@ func (d Map) Merge(merge Map) Map {
 //     m := map[string]interface{}{"parent": map[string]interface{}{"childname": "Luke"}}
 //     m.Has("parent.childname")
 //     // return true
-//
-//     // or the more efficient:
-//     m.Has("parent", "childname")
-//     // also returns true
-func (d Map) Has(path ...string) bool {
-	return d.Get(path...) != nil
+func (d Map) Has(path string) bool {
+	return d.Get(path) != nil
 }

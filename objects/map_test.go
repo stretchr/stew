@@ -83,7 +83,6 @@ func TestHas_WithDeepNesting(t *testing.T) {
 	var l Map = Map{"request": Map{"url": "http://www.stretchr.com/"}}
 
 	assert.True(t, l.Has("request.url"))
-	assert.True(t, l.Has("request", "url"))
 	assert.False(t, l.Has("request.method"))
 	assert.False(t, l.Has("nothing"))
 
