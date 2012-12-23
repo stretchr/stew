@@ -100,6 +100,46 @@ func (d Map) Get(path ...string) interface{} {
 
 }
 
+// Set sets a value in the map.  Supports dot syntax to set deep values.
+//
+// For example,
+//
+//     m.Set("name.first", "Mat")
+//
+// The above code sets the 'first' field on the 'name' object in the m Map.
+//
+// If objects are nil along the way, Set creates new Map objects as needed.
+func (d Map) Set(keypath string, value interface{}) Map {
+
+	var segs []string
+	segs = strings.Split(keypath, ".")
+
+	obj := d
+
+	for fieldIndex, field := range segs {
+
+		if fieldIndex == len(segs)-1 {
+			obj[field] = value
+		}
+
+		if _, exists := obj[field]; !exists {
+			obj[field] = make(Map)
+			obj = obj[field].(Map)
+		} else {
+			switch obj[field].(type) {
+			case Map:
+				obj = obj[field].(Map)
+			case map[string]interface{}:
+				obj = Map(obj[field].(map[string]interface{}))
+			}
+		}
+
+	}
+
+	// chain
+	return d
+}
+
 // Exclude returns a new Map with the keys in the specified []string
 // excluded.
 func (d Map) Exclude(exclude []string) Map {

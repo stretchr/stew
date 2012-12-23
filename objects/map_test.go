@@ -105,3 +105,28 @@ func TestGet_WithNativeMap(t *testing.T) {
 	assert.Equal(t, "http://www.stretchr.com/", l.Get("request.url"))
 
 }
+
+func TestSet_Simple(t *testing.T) {
+	// https://github.com/stretchrcom/stew/issues/2
+
+	var m Map = make(Map)
+	assert.Equal(t, m, m.Set("name", "Tyler"))
+
+	assert.Equal(t, "Tyler", m["name"])
+
+}
+
+func TestSet_Deep(t *testing.T) {
+	// https://github.com/stretchrcom/stew/issues/2
+
+	var m Map = make(Map)
+	assert.Equal(t, m, m.Set("personal.info.name.first", "Tyler"))
+
+	assert.Equal(t, "Tyler", m.Get("personal.info.name.first"))
+
+	nameObj := m.Get("personal.info.name")
+	if assert.NotNil(t, nameObj) {
+		assert.Equal(t, "Tyler", nameObj.(Map)["first"])
+	}
+
+}
