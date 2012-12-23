@@ -63,7 +63,7 @@ func NewMap(keyAndValuePairs ...interface{}) Map {
 //
 //     m = Map{"name":Map{"First": "Mat", "Last": "Ryer"}}
 //
-//     m.Get("name", "Last")
+//     m.Get("name.Last")
 //     // returns "Ryer"
 func (d Map) Get(path string) interface{} {
 
