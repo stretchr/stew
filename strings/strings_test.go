@@ -13,9 +13,21 @@ func Teststrings_MergeStrings(t *testing.T) {
 
 }
 
+func Teststrings_MergeStringsReversed(t *testing.T) {
+
+	assert.Equal(t, "(jsonString)callback", MergeStringsReversed("callback", "(", "jsonString", ")"))
+
+}
+
 func Teststrings_JoinStrings(t *testing.T) {
 
 	assert.Equal(t, "projects/centivus/accounts/tyler", JoinStrings("/", "projects", "centivus", "accounts", "tyler"))
+
+}
+
+func TestStrings_JoinStringsReversed(t *testing.T) {
+
+	assert.Equal(t, "tyler/accounts/centivus/projects", JoinStringsReversed("/", "projects", "centivus", "accounts", "tyler"))
 
 }
 
