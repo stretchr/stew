@@ -93,7 +93,11 @@ func TestGet(t *testing.T) {
 	var l Map = Map{"request": Map{"url": "http://www.stretchr.com/"}}
 
 	assert.Equal(t, "http://www.stretchr.com/", l.Get("request.url"))
+
+	// test some fail cases
 	assert.Nil(t, l.Get("something.that.doesnt.exist"))
+	assert.Nil(t, l.Get("request.url.somethingelse"))
+	assert.Nil(t, l.Get("request.somethingelse"))
 
 }
 
