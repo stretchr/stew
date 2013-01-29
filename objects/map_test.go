@@ -97,6 +97,16 @@ func TestGet(t *testing.T) {
 
 }
 
+func TestSafeGet(t *testing.T) {
+
+	var defaultValue string = "Default"
+	var l Map = Map{"request": Map{"url": "http://www.stretchr.com/"}}
+
+	assert.Equal(t, defaultValue, l.GetWithDefault("request.nope", defaultValue))
+	assert.Equal(t, "http://www.stretchr.com/", l.GetWithDefault("request.url", defaultValue))
+
+}
+
 func TestGet_WithNativeMap(t *testing.T) {
 
 	var l Map = Map{"request": map[string]interface{}{"url": "http://www.stretchr.com/"}}

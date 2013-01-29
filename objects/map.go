@@ -65,9 +65,9 @@ func NewMap(keyAndValuePairs ...interface{}) Map {
 //
 //     m.Get("name.Last")
 //     // returns "Ryer"
-func (d Map) Get(path string) interface{} {
+func (d Map) Get(keypath string) interface{} {
 
-	var segs []string = strings.Split(path, ".")
+	var segs []string = strings.Split(keypath, ".")
 
 	obj := d
 
@@ -88,6 +88,16 @@ func (d Map) Get(path string) interface{} {
 
 	return obj
 
+}
+
+// GetWithDefault gets the value at the specified keypath, or returns the defaultValue if
+// none could be found.
+func (d Map) GetWithDefault(keypath string, defaultValue interface{}) interface{} {
+	obj := d.Get(keypath)
+	if obj == nil {
+		return defaultValue
+	}
+	return obj
 }
 
 // Set sets a value in the map.  Supports dot syntax to set deep values.
