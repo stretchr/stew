@@ -4,6 +4,7 @@ import (
 	"bytes"
 	"fmt"
 	"github.com/stretchrcom/testify/assert"
+	"strings"
 	"testing"
 )
 
@@ -39,7 +40,15 @@ func Benchmark_SprintF(b *testing.B) {
 
 }
 
-func Benchmark_Join(b *testing.B) {
+func Benchmark_Strings_Join(b *testing.B) {
+
+	for i := 0; i < b.N; i++ {
+		strings.Join([]string{"projects", string(i), "accounts", string(i)}, "/")
+	}
+
+}
+
+func Benchmark_Stew_JoinStrings(b *testing.B) {
 
 	for i := 0; i < b.N; i++ {
 		_ = JoinStrings("/", "projects", string(i), "accounts", string(i))
@@ -47,7 +56,7 @@ func Benchmark_Join(b *testing.B) {
 
 }
 
-func Benchmark_Bytes(b *testing.B) {
+func Benchmark_Stew_Bytes(b *testing.B) {
 
 	for i := 0; i < b.N; i++ {
 		var buffer bytes.Buffer
