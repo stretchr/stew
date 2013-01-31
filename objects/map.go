@@ -170,18 +170,24 @@ func (d Map) Copy() Map {
 	return copied
 }
 
-// Merge blends the specified map with this map and returns the result.
+// Merge blends the specified map with a copy of this map and returns the result.
 //
 // Keys that appear in both will be selected from the specified map.
 func (d Map) Merge(merge Map) Map {
+	return d.Copy().MergeHere(merge)
+}
 
-	merged := d.Copy()
+// Merge blends the specified map with this map and returns the current map.
+//
+// Keys that appear in both will be selected from the specified map.  The original map
+// will be modified.
+func (d Map) MergeHere(merge Map) Map {
 
 	for k, v := range merge {
-		merged[k] = v
+		d[k] = v
 	}
 
-	return merged
+	return d
 
 }
 

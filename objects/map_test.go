@@ -53,6 +53,21 @@ func TestMerge(t *testing.T) {
 
 }
 
+func TestMergeHere(t *testing.T) {
+
+	d := make(Map)
+	d["name"] = "Mat"
+
+	d1 := make(Map)
+	d1["name"] = "Tyler"
+	d1["location"] = "UT"
+
+	merged := d.MergeHere(d1)
+
+	assert.Equal(t, d, merged, "With MergeHere, it should return the first modified map")
+
+}
+
 func TestExclude(t *testing.T) {
 
 	d := make(Map)
