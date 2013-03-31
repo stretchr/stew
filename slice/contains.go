@@ -31,10 +31,10 @@ func objectsAreEqual(left, right interface{}) bool {
 // "slice" argument. The slice argument must be a slice or array.
 //
 // This function is performant for builtin types such as int, string, etc, though
-// it is not quite as fast as a direct comparison loop would be, due to some 
+// it is not quite as fast as a direct comparison loop would be, due to some
 // type assertion necessary to make it generic.
 //
-// If the type passed is not a builtin type, it is significantly slower due to 
+// If the type passed is not a builtin type, it is significantly slower due to
 // deep equality checks.
 //
 // This function is practically equal in performance to a a direct comparison loop

@@ -11,10 +11,10 @@ import (
 //     one := []byte("Hello")
 //     two := []byte(" ")
 //     three := []byte("Stretchr!")
-//    
+//
 //     // merge the bytes
 //     mergedBytes := strings.MergeBytes(one, two, three)
-//    
+//
 //     log.Print(mergedBytes)
 //     // prints "Hello Stretchr!"
 func MergeBytes(byteArray ...[]byte) []byte {
