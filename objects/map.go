@@ -90,6 +90,11 @@ func (d Map) Get(keypath string) interface{} {
 
 }
 
+// GetMap gets another Map from this one, or panics if the object is missing or not a Map.
+func (d Map) GetMap(keypath string) Map {
+	return d.Get(keypath).(Map)
+}
+
 // GetWithDefault gets the value at the specified keypath, or returns the defaultValue if
 // none could be found.
 func (d Map) GetWithDefault(keypath string, defaultValue interface{}) interface{} {

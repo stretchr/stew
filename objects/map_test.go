@@ -116,7 +116,7 @@ func TestGet(t *testing.T) {
 
 }
 
-func TestSafeGet(t *testing.T) {
+func TestGetWithDefault(t *testing.T) {
 
 	var defaultValue string = "Default"
 	var l Map = Map{"request": Map{"url": "http://www.stretchr.com/"}}
@@ -156,5 +156,18 @@ func TestSet_Deep(t *testing.T) {
 	if assert.NotNil(t, nameObj) {
 		assert.Equal(t, "Tyler", nameObj.(Map)["first"])
 	}
+
+}
+
+func Test_GetMap(t *testing.T) {
+
+	var parent Map = make(Map)
+	var child Map = make(Map)
+	child.Set("name", "child")
+
+	parent.Set("child", child)
+
+	var gottenChild Map = parent.GetMap("child")
+	assert.Equal(t, "child", gottenChild.Get("name"))
 
 }
