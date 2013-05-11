@@ -8,6 +8,36 @@ import (
 	"testing"
 )
 
+func TestStrings_SplitBy(t *testing.T) {
+
+	segs := SplitBy("ThisWillSplitByCase", func(r rune) bool {
+		return strings.ToUpper(string(r)) == string(r)
+	})
+
+	if assert.Equal(t, len(segs), 5) {
+		assert.Equal(t, segs[0], "This")
+		assert.Equal(t, segs[1], "Will")
+		assert.Equal(t, segs[2], "Split")
+		assert.Equal(t, segs[3], "By")
+		assert.Equal(t, segs[4], "Case")
+	}
+
+}
+
+func TestStrings_SplitByCamelCase(t *testing.T) {
+
+	segs := SplitByCamelCase("ThisWillSplitByCase")
+
+	if assert.Equal(t, len(segs), 5) {
+		assert.Equal(t, segs[0], "This")
+		assert.Equal(t, segs[1], "Will")
+		assert.Equal(t, segs[2], "Split")
+		assert.Equal(t, segs[3], "By")
+		assert.Equal(t, segs[4], "Case")
+	}
+
+}
+
 func Teststrings_MergeStrings(t *testing.T) {
 
 	assert.Equal(t, "callback(jsonString)", MergeStrings("callback", "(", "jsonString", ")"))

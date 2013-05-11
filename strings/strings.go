@@ -2,6 +2,7 @@ package strings
 
 import (
 	"bytes"
+	"strings"
 )
 
 // MergeStrings merges many strings together.
@@ -55,4 +56,40 @@ func JoinStringsReversed(separator string, stringArray ...string) string {
 
 	return buffer.String()
 
+}
+
+// SplitBy splits a string to segments based on the return of the decider function.
+func SplitBy(s string, decider func(r rune) bool) []string {
+
+	// split by caps
+	var segments []string
+	var currentSeg []rune
+
+	for rIndex, r := range s {
+
+		if decider(r) {
+			// new word
+			if len(currentSeg) > 0 {
+				segments = append(segments, string(currentSeg))
+				currentSeg = nil
+			}
+		}
+
+		currentSeg = append(currentSeg, r)
+
+		// is this the last one?
+		if rIndex == len(s)-1 {
+			segments = append(segments, string(currentSeg))
+		}
+
+	}
+
+	return segments
+}
+
+// SplitByCamelCase splits the string up by each capital character.
+func SplitByCamelCase(s string) []string {
+	return SplitBy(s, func(r rune) bool {
+		return strings.ToUpper(string(r)) == string(r)
+	})
 }
