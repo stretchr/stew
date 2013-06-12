@@ -1,7 +1,7 @@
 package objects
 
 import (
-	"github.com/stretchrcom/testify/assert"
+	"github.com/stretchr/testify/assert"
 	"testing"
 )
 
@@ -135,7 +135,7 @@ func TestGet_WithNativeMap(t *testing.T) {
 }
 
 func TestSet_Simple(t *testing.T) {
-	// https://github.com/stretchrcom/stew/issues/2
+	// https://github.com/stretchr/stew/issues/2
 
 	var m Map = make(Map)
 	assert.Equal(t, m, m.Set("name", "Tyler"))
@@ -145,7 +145,7 @@ func TestSet_Simple(t *testing.T) {
 }
 
 func TestSet_Deep(t *testing.T) {
-	// https://github.com/stretchrcom/stew/issues/2
+	// https://github.com/stretchr/stew/issues/2
 
 	var m Map = make(Map)
 	assert.Equal(t, m, m.Set("personal.info.name.first", "Tyler"))

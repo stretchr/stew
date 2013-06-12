@@ -3,7 +3,7 @@ package strings
 import (
 	"bytes"
 	"fmt"
-	"github.com/stretchrcom/testify/assert"
+	"github.com/stretchr/testify/assert"
 	"strings"
 	"testing"
 )
