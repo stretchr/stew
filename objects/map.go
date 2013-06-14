@@ -5,6 +5,10 @@ import (
 	"strings"
 )
 
+const (
+	pathSeparator string = "."
+)
+
 // Map is a map[string]interface{} with additional helpful functionality.
 //
 // You can use Map functionality on any map[string]interface{} using the following
@@ -67,7 +71,7 @@ func NewMap(keyAndValuePairs ...interface{}) Map {
 //     // returns "Ryer"
 func (d Map) Get(keypath string) interface{} {
 
-	var segs []string = strings.Split(keypath, ".")
+	var segs []string = strings.Split(keypath, pathSeparator)
 
 	obj := d
 
@@ -117,7 +121,7 @@ func (d Map) GetWithDefault(keypath string, defaultValue interface{}) interface{
 func (d Map) Set(keypath string, value interface{}) Map {
 
 	var segs []string
-	segs = strings.Split(keypath, ".")
+	segs = strings.Split(keypath, pathSeparator)
 
 	obj := d
 
