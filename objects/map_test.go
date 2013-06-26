@@ -53,6 +53,18 @@ func TestMerge(t *testing.T) {
 
 }
 
+func TestMSI(t *testing.T) {
+
+	m := NewMap("name", "Mat", "age", 29, "bool", true)
+
+	var msi map[string]interface{} = m.MSI()
+
+	assert.Equal(t, "Mat", msi["name"])
+	assert.Equal(t, 29, msi["age"])
+	assert.Equal(t, true, msi["bool"])
+
+}
+
 func TestMergeHere(t *testing.T) {
 
 	d := make(Map)

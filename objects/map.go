@@ -209,3 +209,9 @@ func (d Map) MergeHere(merge Map) Map {
 func (d Map) Has(path string) bool {
 	return d.Get(path) != nil
 }
+
+// MSI is a shortcut method to get the current map as a
+// normal map[string]interface{}.
+func (d Map) MSI() map[string]interface{} {
+	return map[string]interface{}(d)
+}
