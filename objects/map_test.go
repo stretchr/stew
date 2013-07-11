@@ -128,13 +128,30 @@ func TestGet(t *testing.T) {
 
 }
 
-func TestGetWithDefault(t *testing.T) {
+func TestGetOrDefault(t *testing.T) {
 
 	var defaultValue string = "Default"
 	var l Map = Map{"request": Map{"url": "http://www.stretchr.com/"}}
 
-	assert.Equal(t, defaultValue, l.GetWithDefault("request.nope", defaultValue))
-	assert.Equal(t, "http://www.stretchr.com/", l.GetWithDefault("request.url", defaultValue))
+	assert.Equal(t, defaultValue, l.GetOrDefault("request.nope", defaultValue))
+	assert.Equal(t, "http://www.stretchr.com/", l.GetOrDefault("request.url", defaultValue))
+
+}
+
+func TestGetString(t *testing.T) {
+
+	var l Map = Map{"request": Map{"url": "http://www.stretchr.com/"}}
+
+	assert.Equal(t, l.GetString("request.url"), "http://www.stretchr.com/")
+
+}
+
+func TestGetStringOrDefault(t *testing.T) {
+
+	var l Map = Map{"request": Map{"url": "http://www.stretchr.com/"}}
+
+	assert.Equal(t, l.GetStringOrDefault("request.url", "default"), "http://www.stretchr.com/")
+	assert.Equal(t, l.GetStringOrDefault("request.nope", "default"), "default")
 
 }
 

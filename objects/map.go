@@ -99,14 +99,31 @@ func (d Map) GetMap(keypath string) Map {
 	return d.Get(keypath).(Map)
 }
 
+// GetString gets a string value from the map at the given keypath, or panics if one
+// is not available, or is of the wrong type.
+func (d Map) GetString(keypath string) string {
+	return d.Get(keypath).(string)
+}
+
 // GetWithDefault gets the value at the specified keypath, or returns the defaultValue if
 // none could be found.
-func (d Map) GetWithDefault(keypath string, defaultValue interface{}) interface{} {
+func (d Map) GetOrDefault(keypath string, defaultValue interface{}) interface{} {
 	obj := d.Get(keypath)
 	if obj == nil {
 		return defaultValue
 	}
 	return obj
+}
+
+// GetWithDefault gets the string value at the specified keypath,
+// or returns the defaultValue if none could be found.  Will panic if the
+// object is there but of the wrong type.
+func (d Map) GetStringOrDefault(keypath, defaultValue string) string {
+	obj := d.Get(keypath)
+	if obj == nil {
+		return defaultValue
+	}
+	return obj.(string)
 }
 
 // Set sets a value in the map.  Supports dot syntax to set deep values.
