@@ -200,3 +200,51 @@ func Test_GetMap(t *testing.T) {
 	assert.Equal(t, "child", gottenChild.Get("name"))
 
 }
+
+func TestMapJSON(t *testing.T) {
+
+	m := make(Map)
+
+	m.Set("name", "tyler")
+
+	json, err := m.JSON()
+
+	if assert.NoError(t, err) {
+		assert.Equal(t, json, "{\"name\":\"tyler\"}")
+	}
+
+}
+
+func TestMapNewMapFromJSON(t *testing.T) {
+
+	m, err := NewMapFromJSON("{\"name\":\"tyler\"}")
+
+	if assert.NotNil(t, m) && assert.NoError(t, err) {
+		assert.Equal(t, m.Get("name").(string), "tyler")
+	}
+
+}
+
+func TestMapBase64(t *testing.T) {
+
+	m := make(Map)
+
+	m.Set("name", "tyler")
+
+	b64, err := m.Base64()
+
+	if assert.NoError(t, err) {
+		assert.Equal(t, b64, "eyJuYW1lIjoidHlsZXIifQ==")
+	}
+
+}
+
+func TestNewMapFromBase64String(t *testing.T) {
+
+	m, err := NewMapFromBase64String("eyJuYW1lIjoidHlsZXIifQ==")
+
+	if assert.NotNil(t, m) && assert.NoError(t, err) {
+		assert.Equal(t, m.Get("name").(string), "tyler")
+	}
+
+}

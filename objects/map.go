@@ -1,7 +1,12 @@
 package objects
 
 import (
+	"bytes"
+	"encoding/base64"
+	"encoding/json"
+	"errors"
 	"fmt"
+	"io/ioutil"
 	"strings"
 )
 
@@ -62,6 +67,35 @@ func NewMap(keyAndValuePairs ...interface{}) Map {
 	return newMap
 }
 
+// NewMapFromJSON creates a new map from a JSON string representation
+func NewMapFromJSON(data string) (Map, error) {
+
+	var unmarshalled map[string]interface{}
+
+	err := json.Unmarshal([]byte(data), &unmarshalled)
+
+	if err != nil {
+		return nil, err
+	}
+
+	return Map(unmarshalled), nil
+
+}
+
+// NewMapFromBase64String creates a new map from a Base64 string representation
+func NewMapFromBase64String(data string) (Map, error) {
+
+	decoder := base64.NewDecoder(base64.StdEncoding, strings.NewReader(data))
+
+	decoded, err := ioutil.ReadAll(decoder)
+	if err != nil {
+		return nil, err
+	}
+
+	return NewMapFromJSON(string(decoded))
+
+}
+
 // Get gets the value from the map.  Supports deep nesting of other maps,
 // For example:
 //
@@ -92,6 +126,20 @@ func (d Map) Get(keypath string) interface{} {
 
 	return obj
 
+}
+
+// GetString gets a value as a string from the map. It simply calls Get() and casts the result for you.
+// If the object is not a string or the object is not found, an error is returned.
+func (d Map) GetString(keypath string) (string, error) {
+	object := d.Get(keypath)
+	if object == nil {
+		return "", errors.New("Requested object does not exist")
+	}
+	if objectAsString, isString := object.(string); isString == false {
+		return "", errors.New("Requested object is not a string")
+	} else {
+		return objectAsString, nil
+	}
 }
 
 // GetMap gets another Map from this one, or panics if the object is missing or not a Map.
@@ -231,4 +279,31 @@ func (d Map) Has(path string) bool {
 // normal map[string]interface{}.
 func (d Map) MSI() map[string]interface{} {
 	return map[string]interface{}(d)
+}
+
+// JSON converts the map to a JSON string
+func (d Map) JSON() (string, error) {
+
+	result, err := json.Marshal(d)
+
+	return string(result), err
+
+}
+
+// Base64 converts the map to a base64 string
+func (d Map) Base64() (string, error) {
+
+	var buf bytes.Buffer
+
+	jsonData, err := d.JSON()
+	if err != nil {
+		return "", err
+	}
+
+	encoder := base64.NewEncoder(base64.StdEncoding, &buf)
+	encoder.Write([]byte(jsonData))
+	encoder.Close()
+
+	return buf.String(), nil
+
 }
