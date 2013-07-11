@@ -4,6 +4,7 @@ import (
 	"bytes"
 	"encoding/base64"
 	"encoding/json"
+	"errors"
 	"fmt"
 	"io/ioutil"
 	"strings"
@@ -74,7 +75,7 @@ func NewMapFromJSON(data string) (Map, error) {
 	err := json.Unmarshal([]byte(data), &unmarshalled)
 
 	if err != nil {
-		return nil, err
+		return nil, errors.New("Map: JSON decode failed with: " + err.Error())
 	}
 
 	return Map(unmarshalled), nil
@@ -270,6 +271,10 @@ func (d Map) MSI() map[string]interface{} {
 func (d Map) JSON() (string, error) {
 
 	result, err := json.Marshal(d)
+
+	if err != nil {
+		err = errors.New("Map: JSON encode failed with: " + err.Error())
+	}
 
 	return string(result), err
 
