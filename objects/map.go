@@ -128,20 +128,6 @@ func (d Map) Get(keypath string) interface{} {
 
 }
 
-// GetString gets a value as a string from the map. It simply calls Get() and casts the result for you.
-// If the object is not a string or the object is not found, an error is returned.
-func (d Map) GetString(keypath string) (string, error) {
-	object := d.Get(keypath)
-	if object == nil {
-		return "", errors.New("Requested object does not exist")
-	}
-	if objectAsString, isString := object.(string); isString == false {
-		return "", errors.New("Requested object is not a string")
-	} else {
-		return objectAsString, nil
-	}
-}
-
 // GetMap gets another Map from this one, or panics if the object is missing or not a Map.
 func (d Map) GetMap(keypath string) Map {
 	return d.Get(keypath).(Map)
