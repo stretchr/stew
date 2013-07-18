@@ -5,6 +5,14 @@ import (
 	"strings"
 )
 
+const (
+	literalTrue        string = "true"
+	literalFalse       string = "false"
+	literalNull        string = "null"
+	literalDoubleQuote string = `"`
+	literalSingleQuote string = `'`
+)
+
 // Parse tries to create a native object from the given
 // string, or just returns the string if nothing takes.
 //
@@ -26,11 +34,11 @@ func Parse(s string) interface{} {
 	/*
 	   Is it forced to be a string with quotes?
 	*/
-	if strings.HasPrefix(s, `"`) && strings.HasSuffix(s, `"`) {
-		return strings.Trim(s, `"`)
+	if strings.HasPrefix(s, literalDoubleQuote) && strings.HasSuffix(s, literalDoubleQuote) {
+		return strings.Trim(s, literalDoubleQuote)
 	}
-	if strings.HasPrefix(s, `'`) && strings.HasSuffix(s, `'`) {
-		return strings.Trim(s, `'`)
+	if strings.HasPrefix(s, literalSingleQuote) && strings.HasSuffix(s, literalSingleQuote) {
+		return strings.Trim(s, literalSingleQuote)
 	}
 
 	/*
@@ -40,10 +48,15 @@ func Parse(s string) interface{} {
 	/*
 	   Booleans
 	*/
-	case "true":
+	case literalTrue:
 		return true
-	case "false":
+	case literalFalse:
 		return false
+	/*
+		Other
+	*/
+	case literalNull:
+		return nil
 	}
 
 	/*

@@ -8,6 +8,7 @@ import (
 func TestParse(t *testing.T) {
 
 	assert.Exactly(t, nil, Parse(""))
+	assert.Exactly(t, nil, Parse("null"))
 
 	assert.Exactly(t, int(1), Parse("1"))
 	assert.Exactly(t, 9223372036854775807, Parse("9223372036854775807"))
