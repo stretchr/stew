@@ -14,7 +14,14 @@ import (
 // This method knows about all number types, and will always
 // look for the smallest type to fit the number.  It also handles
 // the boolean literals 'true' and 'false'.
+//
+// An empty string ("") will return nil.
 func Parse(s string) interface{} {
+
+	// nothing is nil
+	if len(s) == 0 {
+		return nil
+	}
 
 	/*
 	   Is it forced to be a string with quotes?
