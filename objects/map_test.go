@@ -1,7 +1,6 @@
 package objects
 
 import (
-	"fmt"
 	"github.com/stretchr/testify/assert"
 	"testing"
 )
@@ -251,7 +250,7 @@ func TestMapSignedBase64(t *testing.T) {
 	b64, err := m.SignedBase64(signatureTestKey)
 
 	if assert.NoError(t, err) {
-		assert.Equal(t, b64, "eyJuYW1lIjoidHlsZXIifQ==:125052af5002afcf68f5b83089756c62cc139b97")
+		assert.Equal(t, b64, "eyJuYW1lIjoidHlsZXIifQ==*125052af5002afcf68f5b83089756c62cc139b97")
 	}
 
 }
@@ -269,25 +268,25 @@ func TestNewMapFromBase64String(t *testing.T) {
 func TestNewMapFromSignedBase64String(t *testing.T) {
 
 	// malformed string
-	m, err := NewMapFromSignedBase64String("eyJuYW1lIjoidHlsZXIifQ==125052af5002afcf68f5b83089756c62cc139b97BREAK", signatureTestKey)
+	m, err := NewMapFromSignedBase64String("eyJuYW1lIjoidHlsZXIifQ==125052af5002afcf68f5b83089756c62cc139b97", signatureTestKey)
 	if assert.Error(t, err) {
 		assert.Nil(t, m)
 	}
 
 	// altered signature
-	m, err = NewMapFromSignedBase64String("eyJuYW1lIjoidHlsZXIifQ==:125052af5002afcf68f5b83089756c62cc139b97BREAK", signatureTestKey)
+	m, err = NewMapFromSignedBase64String("eyJuYW1lIjoidHlsZXIifQ==*125052af5002afcf68f5b83089756c62cc139b97BREAK", signatureTestKey)
 	if assert.Error(t, err) {
 		assert.Nil(t, m)
 	}
 
 	// altered data
-	m, err = NewMapFromSignedBase64String("eyJuYW1lIjoidHlXIifQ==:125052af5002afcf68f5b83089756c62cc139b97BREAK", signatureTestKey)
+	m, err = NewMapFromSignedBase64String("eyJuYW1lIjoidHlXIifQ==*125052af5002afcf68f5b83089756c62cc139b97", signatureTestKey)
 	if assert.Error(t, err) {
 		assert.Nil(t, m)
 	}
 
 	// correct string
-	m, err = NewMapFromSignedBase64String("eyJuYW1lIjoidHlsZXIifQ==:125052af5002afcf68f5b83089756c62cc139b97", signatureTestKey)
+	m, err = NewMapFromSignedBase64String("eyJuYW1lIjoidHlsZXIifQ==*125052af5002afcf68f5b83089756c62cc139b97", signatureTestKey)
 
 	if assert.NotNil(t, m) && assert.NoError(t, err) {
 		assert.Equal(t, m.Get("name").(string), "tyler")

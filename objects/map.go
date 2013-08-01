@@ -13,7 +13,7 @@ import (
 
 const (
 	pathSeparator      string = "."
-	signatureSeparator        = ":"
+	signatureSeparator        = "*"
 )
 
 // Map is a map[string]interface{} with additional helpful functionality.
