@@ -6,12 +6,14 @@ import (
 	"encoding/json"
 	"errors"
 	"fmt"
+	"github.com/stretchr/signature"
 	"io/ioutil"
 	"strings"
 )
 
 const (
-	pathSeparator string = "."
+	pathSeparator      string = "."
+	signatureSeparator        = ":"
 )
 
 // Map is a map[string]interface{} with additional helpful functionality.
@@ -93,6 +95,23 @@ func NewMapFromBase64String(data string) (Map, error) {
 	}
 
 	return NewMapFromJSON(string(decoded))
+
+}
+
+// NewMapFromSignedBase64String creates a new map from a signed Base64 string representation
+func NewMapFromSignedBase64String(data, key string) (Map, error) {
+
+	parts := strings.Split(data, signatureSeparator)
+	if len(parts) != 2 {
+		return nil, errors.New("Map: Signed base64 string is malformed.")
+	}
+
+	sig := signature.HashWithKey([]byte(parts[0]), []byte(key))
+	if parts[1] != sig {
+		return nil, errors.New("Map: Signature for Base64 data does not match.")
+	}
+
+	return NewMapFromBase64String(parts[0])
 
 }
 
@@ -295,5 +314,20 @@ func (d Map) Base64() (string, error) {
 	encoder.Close()
 
 	return buf.String(), nil
+
+}
+
+// SignedBase64 converts the map to a base64 string and signs it using the
+// provided key. The returned data is the base64 string plus an appended signature
+func (d Map) SignedBase64(key string) (string, error) {
+
+	base64, err := d.Base64()
+	if err != nil {
+		return "", err
+	}
+
+	sig := signature.HashWithKey([]byte(base64), []byte(key))
+
+	return base64 + signatureSeparator + sig, nil
 
 }
