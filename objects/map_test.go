@@ -250,7 +250,7 @@ func TestMapSignedBase64(t *testing.T) {
 	b64, err := m.SignedBase64(signatureTestKey)
 
 	if assert.NoError(t, err) {
-		assert.Equal(t, b64, "eyJuYW1lIjoidHlsZXIifQ==*125052af5002afcf68f5b83089756c62cc139b97")
+		assert.Equal(t, b64, "eyJuYW1lIjoidHlsZXIifQ==_125052af5002afcf68f5b83089756c62cc139b97")
 	}
 
 }
@@ -274,22 +274,50 @@ func TestNewMapFromSignedBase64String(t *testing.T) {
 	}
 
 	// altered signature
-	m, err = NewMapFromSignedBase64String("eyJuYW1lIjoidHlsZXIifQ==*125052af5002afcf68f5b83089756c62cc139b97BREAK", signatureTestKey)
+	m, err = NewMapFromSignedBase64String("eyJuYW1lIjoidHlsZXIifQ==_125052af5002afcf68f5b83089756c62cc139b97BREAK", signatureTestKey)
 	if assert.Error(t, err) {
 		assert.Nil(t, m)
 	}
 
 	// altered data
-	m, err = NewMapFromSignedBase64String("eyJuYW1lIjoidHlXIifQ==*125052af5002afcf68f5b83089756c62cc139b97", signatureTestKey)
+	m, err = NewMapFromSignedBase64String("eyJuYW1lIjoidHlXIifQ==_125052af5002afcf68f5b83089756c62cc139b97", signatureTestKey)
 	if assert.Error(t, err) {
 		assert.Nil(t, m)
 	}
 
 	// correct string
-	m, err = NewMapFromSignedBase64String("eyJuYW1lIjoidHlsZXIifQ==*125052af5002afcf68f5b83089756c62cc139b97", signatureTestKey)
+	m, err = NewMapFromSignedBase64String("eyJuYW1lIjoidHlsZXIifQ==_125052af5002afcf68f5b83089756c62cc139b97", signatureTestKey)
 
 	if assert.NotNil(t, m) && assert.NoError(t, err) {
 		assert.Equal(t, m.Get("name").(string), "tyler")
+	}
+
+}
+
+func TestMapHash(t *testing.T) {
+
+	m := make(Map)
+
+	m.Set("name", "tyler")
+
+	hash, err := m.Hash()
+
+	if assert.NoError(t, err) {
+		assert.Equal(t, hash, "4100f62944bafb39f3cd36a08fe7094482b69207")
+	}
+
+}
+
+func TestMapHashWithKey(t *testing.T) {
+
+	m := make(Map)
+
+	m.Set("name", "tyler")
+
+	hash, err := m.HashWithKey(signatureTestKey)
+
+	if assert.NoError(t, err) {
+		assert.Equal(t, hash, "125052af5002afcf68f5b83089756c62cc139b97")
 	}
 
 }

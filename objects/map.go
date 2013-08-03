@@ -13,7 +13,7 @@ import (
 
 const (
 	pathSeparator      string = "."
-	signatureSeparator        = "*"
+	signatureSeparator        = "_"
 )
 
 // Map is a map[string]interface{} with additional helpful functionality.
@@ -318,7 +318,9 @@ func (d Map) Base64() (string, error) {
 }
 
 // SignedBase64 converts the map to a base64 string and signs it using the
-// provided key. The returned data is the base64 string plus an appended signature
+// provided key. The returned data is the base64 string plus an appended signature.
+//
+// Will return an error if Base64ing the map fails.
 func (d Map) SignedBase64(key string) (string, error) {
 
 	base64, err := d.Base64()
@@ -329,5 +331,29 @@ func (d Map) SignedBase64(key string) (string, error) {
 	sig := signature.HashWithKey([]byte(base64), []byte(key))
 
 	return base64 + signatureSeparator + sig, nil
+
+}
+
+// Hash gets the hash of the map with no security key.
+//
+// Will return an error if Base64ing the map fails.
+func (d Map) Hash() (string, error) {
+	return d.HashWithKey("")
+}
+
+// HashWithKey gets the a hash of the map, signed by the
+// specified security key.
+//
+// Will return an error if Base64ing the map fails.
+func (d Map) HashWithKey(key string) (string, error) {
+
+	base64, err := d.Base64()
+	if err != nil {
+		return "", err
+	}
+
+	sig := signature.HashWithKey([]byte(base64), []byte(key))
+
+	return sig, nil
 
 }
