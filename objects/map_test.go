@@ -24,6 +24,23 @@ func TestNewMap(t *testing.T) {
 
 }
 
+func TestM(t *testing.T) {
+
+	m := M("name", "Mat", "age", 29, "bool", true)
+
+	assert.Equal(t, "Mat", m["name"])
+	assert.Equal(t, 29, m["age"])
+	assert.Equal(t, true, m["bool"])
+
+	assert.Panics(t, func() {
+		M(1, "Mat", "age", 29, "bool", true)
+	}, "Non string key should panic")
+	assert.Panics(t, func() {
+		M("name", "Mat", "age", 29, "bool")
+	}, "Wrong number of arguments should panic")
+
+}
+
 func TestCopy(t *testing.T) {
 
 	d1 := make(Map)

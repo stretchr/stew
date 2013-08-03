@@ -33,7 +33,7 @@ var (
 //     // returns "Stew"
 type Map map[string]interface{}
 
-// NewMap creates a new map.
+// NewMap creates a new map.  You may also use the M shortcut method.
 //
 // The arguments follow a key, value pattern.
 //
@@ -45,7 +45,7 @@ type Map map[string]interface{}
 //
 // To easily create Maps:
 //
-//     m := objects.NewMap("name", "Mat", "age", 29, "subobj", objects.NewMap("active", true))
+//     m := objects.M("name", "Mat", "age", 29, "subobj", objects.M("active", true))
 //
 //     // creates a Map equivalent to
 //     m := map[string]interface{}{"name": "Mat", "age": 29, "subobj": map[string]interface{}{"active": true}}
@@ -74,6 +74,11 @@ func NewMap(keyAndValuePairs ...interface{}) Map {
 	}
 
 	return newMap
+}
+
+// M is a shortcut method for NewMap.
+func M(keyAndValuePairs ...interface{}) Map {
+	return NewMap(keyAndValuePairs...)
 }
 
 // NewMapFromJSON creates a new map from a JSON string representation
@@ -108,7 +113,7 @@ func NewMapFromBase64String(data string) (Map, error) {
 // NewMapFromSignedBase64String creates a new map from a signed Base64 string representation
 func NewMapFromSignedBase64String(data, key string) (Map, error) {
 
-	parts := strings.Split(data, signatureSeparator)
+	parts := strings.Split(data, SignatureSeparator)
 	if len(parts) != 2 {
 		return nil, errors.New("Map: Signed base64 string is malformed.")
 	}
@@ -131,7 +136,7 @@ func NewMapFromSignedBase64String(data, key string) (Map, error) {
 //     // returns "Ryer"
 func (d Map) Get(keypath string) interface{} {
 
-	var segs []string = strings.Split(keypath, pathSeparator)
+	var segs []string = strings.Split(keypath, PathSeparator)
 
 	obj := d
 
@@ -198,7 +203,7 @@ func (d Map) GetStringOrDefault(keypath, defaultValue string) string {
 func (d Map) Set(keypath string, value interface{}) Map {
 
 	var segs []string
-	segs = strings.Split(keypath, pathSeparator)
+	segs = strings.Split(keypath, PathSeparator)
 
 	obj := d
 
@@ -337,7 +342,7 @@ func (d Map) SignedBase64(key string) (string, error) {
 
 	sig := signature.HashWithKey([]byte(base64), []byte(key))
 
-	return base64 + signatureSeparator + sig, nil
+	return base64 + SignatureSeparator + sig, nil
 
 }
 
