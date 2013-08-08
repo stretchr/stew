@@ -338,3 +338,26 @@ func TestMapHashWithKey(t *testing.T) {
 	}
 
 }
+
+func TestNewMapFromURLQuery(t *testing.T) {
+
+	m, err := NewMapFromURLQuery("name=tyler&state=UT")
+	if assert.NoError(t, err) && assert.NotNil(t, m) {
+		assert.Equal(t, "tyler", m.Get("name"))
+		assert.Equal(t, "UT", m.Get("state"))
+	}
+
+}
+
+func TestURLQuery(t *testing.T) {
+
+	m := make(Map).
+		Set("name", "tyler").
+		Set("state", "UT")
+
+	encoded, err := m.URLQuery()
+	if assert.NoError(t, err) {
+		assert.Equal(t, encoded, "name=tyler&state=UT")
+	}
+
+}

@@ -8,6 +8,7 @@ import (
 	"fmt"
 	"github.com/stretchr/signature"
 	"io/ioutil"
+	"net/url"
 	"strings"
 )
 
@@ -368,4 +369,42 @@ func (d Map) HashWithKey(key string) (string, error) {
 
 	return sig, nil
 
+}
+
+/*
+	URL Query
+	------------------------------------------------
+*/
+
+// NewMapFromURLQuery generates a new map by parsing the specified
+// query.
+//
+// For queries with multiple values, the first value is selected.
+func NewMapFromURLQuery(query string) (Map, error) {
+
+	vals, err := url.ParseQuery(query)
+
+	if err != nil {
+		return nil, err
+	}
+
+	m := make(Map)
+	for k, vals := range vals {
+		m.Set(k, vals[0])
+	}
+
+	return m, nil
+}
+
+// URLQuery gets an encoded URL query representing the given
+// map.
+func (d Map) URLQuery() (string, error) {
+
+	vals := make(url.Values)
+
+	for k, v := range d {
+		vals.Set(k, fmt.Sprintf("%v", v))
+	}
+
+	return vals.Encode(), nil
 }
