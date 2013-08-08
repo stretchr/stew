@@ -403,9 +403,7 @@ func NewMapFromURLQuery(query string) (Map, error) {
 	return m, nil
 }
 
-// URLQuery gets an encoded URL query representing the given
-// map.
-func (d Map) URLQuery() (string, error) {
+func (d Map) URLValues() url.Values {
 
 	vals := make(url.Values)
 
@@ -413,5 +411,11 @@ func (d Map) URLQuery() (string, error) {
 		vals.Set(k, fmt.Sprintf("%v", v))
 	}
 
-	return vals.Encode(), nil
+	return vals
+}
+
+// URLQuery gets an encoded URL query representing the given
+// map.
+func (d Map) URLQuery() (string, error) {
+	return d.URLValues().Encode(), nil
 }

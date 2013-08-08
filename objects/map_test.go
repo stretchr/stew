@@ -370,3 +370,17 @@ func TestURLQuery(t *testing.T) {
 	}
 
 }
+
+func TestURLValues(t *testing.T) {
+
+	m := make(Map).
+		Set("name", "tyler").
+		Set("state", "UT")
+
+	values := m.URLValues()
+	if assert.NotNil(t, values) {
+		encoded := values.Encode()
+		assert.Equal(t, encoded, "name=tyler&state=UT")
+	}
+
+}
