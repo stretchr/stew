@@ -174,6 +174,15 @@ func TestGetStringOrDefault(t *testing.T) {
 
 }
 
+func TestGetStringOrEmpty(t *testing.T) {
+
+	var l Map = Map{"request": Map{"url": "http://www.stretchr.com/"}}
+
+	assert.Equal(t, l.GetStringOrEmpty("request.url"), "http://www.stretchr.com/")
+	assert.Equal(t, l.GetStringOrEmpty("request.nope"), "")
+
+}
+
 func TestGet_WithNativeMap(t *testing.T) {
 
 	var l Map = Map{"request": map[string]interface{}{"url": "http://www.stretchr.com/"}}

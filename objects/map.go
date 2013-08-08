@@ -181,7 +181,7 @@ func (d Map) GetOrDefault(keypath string, defaultValue interface{}) interface{} 
 	return obj
 }
 
-// GetWithDefault gets the string value at the specified keypath,
+// GetStringOrDefault gets the string value at the specified keypath,
 // or returns the defaultValue if none could be found.  Will panic if the
 // object is there but of the wrong type.
 func (d Map) GetStringOrDefault(keypath, defaultValue string) string {
@@ -190,6 +190,13 @@ func (d Map) GetStringOrDefault(keypath, defaultValue string) string {
 		return defaultValue
 	}
 	return obj.(string)
+}
+
+// GetStringOrEmpty gets the string value at the specified keypath or returns
+// an empty string if none could be fo und. Will panic if the object is there
+// but of the wrong type.
+func (d Map) GetStringOrEmpty(keypath string) string {
+	return d.GetStringOrDefault(keypath, "")
 }
 
 // Set sets a value in the map.  Supports dot syntax to set deep values.
