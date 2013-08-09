@@ -2,6 +2,7 @@ package objects
 
 import (
 	"github.com/stretchr/testify/assert"
+	"strings"
 	"testing"
 )
 
@@ -96,6 +97,49 @@ func TestMergeHere(t *testing.T) {
 	merged := d.MergeHere(d1)
 
 	assert.Equal(t, d, merged, "With MergeHere, it should return the first modified map")
+	assert.Equal(t, merged["name"], d1["name"])
+	assert.Equal(t, merged["location"], d1["location"])
+	assert.Equal(t, merged["location"], d["location"])
+
+}
+
+func TestTransform(t *testing.T) {
+
+	d1 := make(Map)
+	d1["name"] = "Tyler"
+	d1["location"] = "UT"
+	d1["language"] = "English"
+
+	d2 := d1.Transform(func(k string, v interface{}) (string, interface{}) {
+		return strings.ToLower(k), strings.ToLower(v.(string))
+	})
+
+	assert.NotEqual(t, d1, d2, "Should be a new map")
+
+	assert.Equal(t, "tyler", d2["name"])
+	assert.Equal(t, "ut", d2["location"])
+	assert.Equal(t, "english", d2["language"])
+
+}
+
+func TestTransformKeys(t *testing.T) {
+
+	d1 := make(Map)
+	d1["name"] = "Tyler"
+	d1["location"] = "UT"
+	d1["language"] = "English"
+
+	mapping := map[string]string{
+		"name":     "Username",
+		"location": "Place",
+		"language": "Speaks",
+	}
+
+	d2 := d1.TransformKeys(mapping)
+
+	assert.Equal(t, "Tyler", d2["Username"])
+	assert.Equal(t, "UT", d2["Place"])
+	assert.Equal(t, "English", d2["Speaks"])
 
 }
 

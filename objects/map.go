@@ -419,3 +419,20 @@ func (d Map) URLValues() url.Values {
 func (d Map) URLQuery() (string, error) {
 	return d.URLValues().Encode(), nil
 }
+
+// Transform builds a new map giving the transformer a chance
+// to change the keys and values as it goes.
+func (d Map) Transform(transformer func(key string, value interface{}) (string, interface{})) Map {
+	m := make(Map)
+	for k, v := range d {
+		modifiedKey, modifiedVal := transformer(k, v)
+		m[modifiedKey] = modifiedVal
+	}
+	return m
+}
+
+func (d Map) TransformKeys(mapping map[string]string) Map {
+	return d.Transform(func(key string, value interface{}) (string, interface{}) {
+		return mapping[key], value
+	})
+}
