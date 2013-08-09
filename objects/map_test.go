@@ -128,6 +128,7 @@ func TestTransformKeys(t *testing.T) {
 	d1["name"] = "Tyler"
 	d1["location"] = "UT"
 	d1["language"] = "English"
+	d1["untouched"] = true
 
 	mapping := map[string]string{
 		"name":     "Username",
@@ -140,6 +141,7 @@ func TestTransformKeys(t *testing.T) {
 	assert.Equal(t, "Tyler", d2["Username"])
 	assert.Equal(t, "UT", d2["Place"])
 	assert.Equal(t, "English", d2["Speaks"])
+	assert.Equal(t, true, d2["untouched"])
 
 }
 

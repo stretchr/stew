@@ -431,8 +431,16 @@ func (d Map) Transform(transformer func(key string, value interface{}) (string, 
 	return m
 }
 
+// TransformKeys builds a new map using the specified key mapping.
+//
+// Unspecified keys will be unaltered.
 func (d Map) TransformKeys(mapping map[string]string) Map {
 	return d.Transform(func(key string, value interface{}) (string, interface{}) {
-		return mapping[key], value
+
+		if newKey, ok := mapping[key]; ok {
+			return newKey, value
+		}
+
+		return key, value
 	})
 }
