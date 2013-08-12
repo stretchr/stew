@@ -395,12 +395,7 @@ func NewMapFromURLQuery(query string) (Map, error) {
 		return nil, err
 	}
 
-	m := make(Map)
-	for k, vals := range vals {
-		m.Set(k, vals[0])
-	}
-
-	return m, nil
+	return NewMapFromURLValues(vals)
 }
 
 func (d Map) URLValues() url.Values {
@@ -412,6 +407,15 @@ func (d Map) URLValues() url.Values {
 	}
 
 	return vals
+}
+
+func NewMapFromURLValues(vals url.Values) (Map, error) {
+	m := make(Map)
+	for k, vals := range vals {
+		m.Set(k, vals[0])
+	}
+
+	return m, nil
 }
 
 // URLQuery gets an encoded URL query representing the given
